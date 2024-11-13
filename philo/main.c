@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: reemessam <reemessam@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/13 14:25:08 by reemessam         #+#    #+#             */
+/*   Updated: 2024/11/13 14:31:57 by reemessam        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	main(int argc, char **argv)
@@ -8,12 +20,10 @@ int	main(int argc, char **argv)
 
 	if (init_rules(&rules, argc, argv) || init_philos(&rules, &philos))
 		return (1);
-
 	while (rules.dead == 0 && (rules.num_eat == 0
 			|| rules.finished_eating < rules.num_philos))
 	{
 	}
-
 	i = -1;
 	while (++i < rules.num_philos)
 	{
@@ -29,11 +39,9 @@ int	main(int argc, char **argv)
 		pthread_mutex_destroy(philos[i].right_fork);
 	}
 	usleep(100);
-
 	pthread_mutex_destroy(&rules.print_mutex);
 	pthread_mutex_destroy(&rules.dead_mutex);
 	pthread_mutex_destroy(&rules.arbiter_lock);
-
 	free(rules.forks);
 	free(philos);
 	return (0);

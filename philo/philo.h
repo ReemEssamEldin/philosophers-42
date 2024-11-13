@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: reemessam <reemessam@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/13 14:25:24 by reemessam         #+#    #+#             */
+/*   Updated: 2024/11/13 14:33:51 by reemessam        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 #define PHILO_H
 
@@ -10,7 +22,7 @@
 // Define any constants or macros here
 
 // Declare any function prototypes here
-typedef struct	s_rules t_rules;
+typedef struct s_rules	t_rules;
 struct	s_rules
 {
 	int				num_philos;
