@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reemessam <reemessam@student.42.fr>        +#+  +:+       +#+        */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/13 14:24:54 by reemessam         #+#    #+#             */
-/*   Updated: 2024/11/13 14:25:45 by reemessam        ###   ########.fr       */
+/*   Created: 2024/11/16 09:47:41 by reldahli          #+#    #+#             */
+/*   Updated: 2024/11/16 09:47:56 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "philo.h"
 
