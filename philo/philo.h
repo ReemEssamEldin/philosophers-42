@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reemessam <reemessam@student.42.fr>        +#+  +:+       +#+        */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:25:24 by reemessam         #+#    #+#             */
-/*   Updated: 2024/11/13 14:33:51 by reemessam        ###   ########.fr       */
+/*   Updated: 2025/01/29 21:37:38 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
-#define PHILO_H
+# define PHILO_H
 
 // Include any necessary libraries here
-#include <sys/time.h>
-#include <pthread.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
+# include <sys/time.h>
+# include <pthread.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
 // Define any constants or macros here
 
 // Declare any function prototypes here
@@ -53,7 +53,7 @@ struct	s_philo
 };
 
 int		ft_atoi(const char *str);
-long	get_timestamp();
+long	get_timestamp(void);
 int		init_rules(t_rules *rules, int argc, char **argv);
 int		init_philos(t_rules *rules, t_philo **philos);
 void	print_action(t_philo *philo, char *action);

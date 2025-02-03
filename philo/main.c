@@ -3,18 +3,72 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reemessam <reemessam@student.42.fr>        +#+  +:+       +#+        */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:25:08 by reemessam         #+#    #+#             */
-/*   Updated: 2024/11/13 14:31:57 by reemessam        ###   ########.fr       */
+/*   Updated: 2025/02/03 11:11:59 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/*
+* Cleanup Function
+* -----------------
+* Handles proper termination of the simulation by:
+* 1. Detaching philosopher threads
+* 2. Destroying all mutexes (forks and control mutexes)
+* 3. Freeing allocated memory
+*
+* Parameters:
+* @rules: Pointer to rules structure containing simulation parameters
+*         and synchronization primitives
+* @philos: Array of philosopher structures to be cleaned up
+*
+* Implementation details:
+* - First loop: Detaches all philosopher threads
+* - Second loop: Destroys fork mutexes and their references
+* - Final phase: Destroys control mutexes (print, dead, arbiter)
+* - Memory cleanup: Frees fork array and philosophers array
+*
+* Note: Small sleep delays (100us) are used to ensure proper
+*       cleanup sequencing
+*/
+void	cleanup(t_rules *rules, t_philo *philos)
+{
+	int	i;
+
+	i = -1;
+	while (++i < rules->num_philos)
+	{
+		pthread_detach(philos[i].thread);
+		usleep(100);
+	}
+	i = -1;
+	while (++i < rules->num_philos)
+	{
+		pthread_mutex_destroy(&rules->forks[i]);
+		pthread_mutex_destroy(philos[i].left_fork);
+		pthread_mutex_destroy(philos[i].right_fork);
+	}
+	usleep(100);
+	pthread_mutex_destroy(&rules->print_mutex);
+	pthread_mutex_destroy(&rules->dead_mutex);
+	pthread_mutex_destroy(&rules->arbiter_lock);
+	free(rules->forks);
+	free(philos);
+}
+
+/*
+Flow:
+* 1. Initialize rules and philosophers structures
+* 2. Start simulation loop that continues until:
+*    - A philosopher dies (rules.dead = 1) OR
+*    - All philosophers have eaten required times (if num_eat specified)
+* 3. Clean up allocated resources
+*/
 int	main(int argc, char **argv)
 {
-	int		i;
 	t_rules	rules;
 	t_philo	*philos;
 
@@ -24,25 +78,6 @@ int	main(int argc, char **argv)
 			|| rules.finished_eating < rules.num_philos))
 	{
 	}
-	i = -1;
-	while (++i < rules.num_philos)
-	{
-		pthread_detach(philos[i].thread);
-		usleep(100);
-	}
-	// destroy
-	i = -1;
-	while (++i < rules.num_philos)
-	{
-		pthread_mutex_destroy(&rules.forks[i]);
-		pthread_mutex_destroy(philos[i].left_fork);
-		pthread_mutex_destroy(philos[i].right_fork);
-	}
-	usleep(100);
-	pthread_mutex_destroy(&rules.print_mutex);
-	pthread_mutex_destroy(&rules.dead_mutex);
-	pthread_mutex_destroy(&rules.arbiter_lock);
-	free(rules.forks);
-	free(philos);
+	cleanup(&rules, philos);
 	return (0);
 }
