@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 09:47:41 by reldahli          #+#    #+#             */
-/*   Updated: 2025/02/03 11:21:14 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/02/03 15:56:29 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int	init_mutexes(t_rules *rules)
 
 	rules->finished_eating = 0;
 	rules->available_slots = rules->num_philos - 1;
+	rules->dead = 0;
 	rules->start_time = get_timestamp();
 	rules->forks = malloc(sizeof(pthread_mutex_t) * rules->num_philos);
 	if (!rules->forks)
