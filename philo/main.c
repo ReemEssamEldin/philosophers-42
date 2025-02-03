@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:25:08 by reemessam         #+#    #+#             */
-/*   Updated: 2025/02/03 11:11:59 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/02/03 21:31:18 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ void	cleanup(t_rules *rules, t_philo *philos)
 	while (++i < rules->num_philos)
 	{
 		pthread_mutex_destroy(&rules->forks[i]);
-		pthread_mutex_destroy(philos[i].left_fork);
-		pthread_mutex_destroy(philos[i].right_fork);
 	}
 	usleep(100);
 	pthread_mutex_destroy(&rules->print_mutex);

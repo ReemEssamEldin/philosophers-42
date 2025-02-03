@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:25:24 by reemessam         #+#    #+#             */
-/*   Updated: 2025/02/03 12:38:14 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/02/03 21:32:17 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ struct	s_philo
 	long			last_meal;
 	pthread_t		thread;
 	t_rules			*rules;
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_fork;
 };
 //init.c
 int     validate_rules(t_rules *rules);
