@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:25:28 by reemessam         #+#    #+#             */
-/*   Updated: 2025/02/03 13:43:55 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/02/03 15:59:55 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	print_action(t_philo *philo, char *action)
 		pthread_mutex_unlock(&philo->rules->print_mutex);
 		return ;
 	}
-	printf("%ld %d %s\n", timestamp, philo->id, action);
+	printf("%ld %d %s\n", timestamp, philo->id + 1, action);
 	pthread_mutex_unlock(&philo->rules->print_mutex);
 }
 
