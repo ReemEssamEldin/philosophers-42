@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:25:28 by reemessam         #+#    #+#             */
-/*   Updated: 2025/02/03 11:36:14 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/02/03 13:43:55 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ long	get_timestamp(void)
 
 /*
 * Print Philosopher Action
-* ----------------------
+* ------------------------
 * Thread-safe function to print philosopher state changes during simulation.
 *
 * Parameters:
@@ -94,6 +94,21 @@ void	print_action(t_philo *philo, char *action)
 	pthread_mutex_unlock(&philo->rules->print_mutex);
 }
 
+/*
+* Custom Sleep Function
+* -------------------
+* Provides millisecond-precision sleep functionality using usleep.
+*
+* Parameters:
+* @time_in_ms: Time to sleep in milliseconds
+*
+* Implementation:
+* - Converts milliseconds to microseconds (x1000)
+* - Uses system call usleep for suspension
+*
+* Note: Used throughout simulation for timing control
+* of philosopher actions (eating, sleeping)
+*/
 void	ft_usleep(long time_in_ms)
 {
 	usleep(time_in_ms * 1000);

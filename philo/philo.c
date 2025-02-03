@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:25:19 by reemessam         #+#    #+#             */
-/*   Updated: 2025/02/03 11:45:26 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/02/03 15:52:26 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,7 +224,7 @@ int	init_philos(t_rules *rules, t_philo **philos)
 	i = -1;
 	while (++i < rules->num_philos)
 	{
-		(*philos)[i].id = i + 1;
+		(*philos)[i].id = i;
 		(*philos)[i].times_eaten = 0;
 		(*philos)[i].last_meal = rules->start_time;
 		(*philos)[i].rules = rules;
