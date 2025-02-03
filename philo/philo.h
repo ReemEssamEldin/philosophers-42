@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:25:24 by reemessam         #+#    #+#             */
-/*   Updated: 2025/02/03 21:32:17 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/02/03 22:03:32 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,5 @@ int     init_philos(t_rules *rules, t_philo **philos);
 int     ft_atoi(const char *str);
 long    get_timestamp(void);
 void    print_action(t_philo *philo, char *action);
-void    ft_usleep(long time_in_ms);
+void    ft_usleep(t_rules *rules, long time_in_ms);
 #endif /* PHILO_H */

@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:25:19 by reemessam         #+#    #+#             */
-/*   Updated: 2025/02/03 21:31:58 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/02/03 22:03:14 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	*philo_routine(void *arg)
 			return (NULL);
 		perform_eating(philo, rules);
 		print_action(philo, "is sleeping");
-		ft_usleep(rules->time_to_sleep);
+		ft_usleep(rules, rules->time_to_sleep);
 	}
 }
 
@@ -170,7 +170,7 @@ void	perform_eating(t_philo *philo, t_rules *rules)
 	print_action(philo, "is eating");
 	philo->last_meal = get_timestamp();
 	philo->times_eaten++;
-	ft_usleep(rules->time_to_eat);
+	ft_usleep(rules, rules->time_to_eat);
 	pthread_mutex_unlock(&rules->forks[philo->id]);
 	pthread_mutex_unlock(&rules->forks[(philo->id + 1) % rules->num_philos]);
 	pthread_mutex_lock(&rules->arbiter_lock);
