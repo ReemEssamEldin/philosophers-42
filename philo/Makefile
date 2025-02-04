@@ -5,7 +5,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g
 #CFLAGS = -Wall -Wextra -Werror -fsanitize=thread -g
 
-SRCS = main.c init.c philo.c utils.c
+SRCS = main.c init.c philo.c utils.c philo_checks.c
 INCS = philo.h
 OBJS = $(SRCS:.c=.o)
 
