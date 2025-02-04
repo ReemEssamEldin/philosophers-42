@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:25:19 by reemessam         #+#    #+#             */
-/*   Updated: 2025/02/03 22:03:14 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/02/04 11:43:10 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,73 +60,6 @@ void	*philo_routine(void *arg)
 		print_action(philo, "is sleeping");
 		ft_usleep(rules, rules->time_to_sleep);
 	}
-}
-
-/*
- * Check Death or Full Condition
- * -----------------------------
- * Monitors philosopher's state for death or completion conditions
- * and manages dining slot availability.
- *
- * Parameters:
- * @philo: Pointer to philosopher structure containing:
- *       - last_meal: Timestamp of last meal
- *       - times_eaten: Count of meals eaten
- * @rules: Pointer to shared rules containing:
- *       - time_to_die: Maximum time between meals
- *       - num_eat: Required number of meals
- *       - available_slots: Current dining slots
- *
- * Checks:
- * 1. Death Check:
- *    - Compares time since last meal with time_to_die
- *    - Sets death flag if exceeded
- *
- * 2. Completion Check:
- *    - Verifies if required meals (num_eat) are completed
- *    - Updates finished_eating counter
- *
- * 3. Slot Management:
- *    - Monitors available dining slots
- *    - Waits for slot availability
- *
- * Return Values:
- * - 1: Death occurred or philosopher is full
- * - 0: Can continue dining
- *
- * Note: Uses arbiter_lock for slot management synchronization
- */
-int	check_death_or_full(t_philo *philo, t_rules *rules)
-{
-	while (1)
-	{
-		if (rules->dead)
-		{
-			return (1);
-		}
-		if (philo->last_meal + rules->time_to_die < get_timestamp())
-		{
-			print_action(philo, "died");
-			pthread_mutex_lock(&rules->dead_mutex);
-			rules->dead = 1;
-			return (1);
-		}
-		if (rules->num_eat > 0 && philo->times_eaten >= rules->num_eat)
-		{
-			rules->finished_eating++;
-			return (1);
-		}
-		pthread_mutex_lock(&rules->arbiter_lock);
-		if (rules->available_slots > 0)
-		{
-			rules->available_slots--;
-			pthread_mutex_unlock(&rules->arbiter_lock);
-			break ;
-		}
-		pthread_mutex_unlock(&rules->arbiter_lock);
-		usleep(100);
-	}
-	return (0);
 }
 
 /*
@@ -220,7 +153,7 @@ void	perform_eating(t_philo *philo, t_rules *rules)
 int	init_philos(t_rules *rules, t_philo **philos)
 
 {
-	int i;
+	int	i;
 
 	*philos = malloc(sizeof(t_philo) * rules->num_philos);
 	if (!*philos)
@@ -233,7 +166,7 @@ int	init_philos(t_rules *rules, t_philo **philos)
 		(*philos)[i].last_meal = rules->start_time;
 		(*philos)[i].rules = rules;
 		if (pthread_create(&(*philos)[i].thread, NULL, philo_routine,
-				&(*philos)[i]))
+			&(*philos)[i]))
 			return (1);
 	}
 	return (0);
