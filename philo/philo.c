@@ -15,7 +15,7 @@
 int	init_philos(t_rules *rules, t_philo **philos)
 
 {
-	int i;
+	int	i;
 
 	*philos = malloc(sizeof(t_philo) * rules->num_philos);
 	if (!*philos)
@@ -76,7 +76,7 @@ static int	acquire_forks(t_philo *philo, t_rules *rules)
 		if (!pickup_fork(philo, &rules->forks[philo->id]))
 			return (FALSE);
 		if (!pickup_fork(philo, &rules->forks[(philo->id + 1)
-				% rules->num_philos]))
+					% rules->num_philos]))
 		{
 			pthread_mutex_unlock(&rules->forks[philo->id]);
 			return (FALSE);
@@ -85,7 +85,7 @@ static int	acquire_forks(t_philo *philo, t_rules *rules)
 	else
 	{
 		if (!pickup_fork(philo, &rules->forks[(philo->id + 1)
-				% rules->num_philos]))
+					% rules->num_philos]))
 			return (FALSE);
 		if (!pickup_fork(philo, &rules->forks[philo->id]))
 		{
