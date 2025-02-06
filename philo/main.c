@@ -37,8 +37,9 @@ void	cleanup(t_rules *rules, t_philo *philos)
 
 int	main(int argc, char **argv)
 {
-	t_rules	rules;
-	t_philo	*philos;
+	t_rules		rules;
+	t_philo		*philos;
+	pthread_t	monitor_thread;
 
 	if (!init_rules(&rules, argc, argv))
 		return (EXIT_FAILURE);
@@ -46,18 +47,12 @@ int	main(int argc, char **argv)
 	{
 		return (EXIT_FAILURE);
 	}
-	while (TRUE)
+	if (!create_monitor(&rules, philos, &monitor_thread))
 	{
-		if (rules.dead == 1)
-		{
-			break ;
-		}
-		if (rules.num_eat > 0 && rules.finished_eating == rules.num_philos)
-		{
-			break ;
-		}
-		usleep(50);
+		cleanup(&rules, philos);
+		return (EXIT_FAILURE);
 	}
+	pthread_join(monitor_thread, NULL);
 	cleanup(&rules, philos);
 	return (EXIT_SUCCESS);
 }
