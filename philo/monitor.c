@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 21:49:20 by reldahli          #+#    #+#             */
-/*   Updated: 2025/02/06 22:03:37 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/02/06 22:04:59 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	*monitor_routine(void *arg)
 				&& rules->finished_eating == rules->num_philos)
 				return (NULL);
 		}
-		usleep(1000); // Sleep for 1ms to prevent excessive CPU usage
+		usleep(1000);
 	}
 	return (NULL);
 }
