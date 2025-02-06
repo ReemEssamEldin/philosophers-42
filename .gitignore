@@ -1,2 +1,5 @@
 *.o
-philo
+philo/philo
+oldphilo/philo
+oldphilo
+testy

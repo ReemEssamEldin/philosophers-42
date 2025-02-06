@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:25:19 by reemessam         #+#    #+#             */
-/*   Updated: 2025/02/06 18:37:42 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/02/06 18:44:05 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,31 +44,38 @@ static int	pickup_fork(t_philo *philo, pthread_mutex_t *fork)
 	return (TRUE);
 }
 
-void	perform_eating(t_philo *philo, t_rules *rules)
+static int	acquire_forks(t_philo *philo, t_rules *rules)
 {
 	if (philo->id % 2 == 0)
 	{
 		if (!pickup_fork(philo, &rules->forks[philo->id]))
-			return ;
+			return (FALSE);
 		if (!pickup_fork(philo, &rules->forks[(philo->id + 1)
 				% rules->num_philos]))
 		{
 			pthread_mutex_unlock(&rules->forks[philo->id]);
-			return ;
+			return (FALSE);
 		}
 	}
 	else
 	{
 		if (!pickup_fork(philo, &rules->forks[(philo->id + 1)
 				% rules->num_philos]))
-			return ;
+			return (FALSE);
 		if (!pickup_fork(philo, &rules->forks[philo->id]))
 		{
 			pthread_mutex_unlock(&rules->forks[(philo->id + 1)
 				% rules->num_philos]);
-			return ;
+			return (FALSE);
 		}
 	}
+	return (TRUE);
+}
+
+void	perform_eating(t_philo *philo, t_rules *rules)
+{
+	if (!acquire_forks(philo, rules))
+		return ;
 	philo->times_eaten++;
 	philo->last_meal = get_timestamp();
 	print_action(philo, "is eating");
