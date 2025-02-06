@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 21:49:20 by reldahli          #+#    #+#             */
-/*   Updated: 2025/02/06 22:58:07 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/02/06 23:00:31 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	*monitor_routine(void *arg)
 			current_time = get_timestamp();
 			if (rules->dead)
 				return (NULL);
-			if(philos[i].times_eaten >= rules->num_eat)
+			if (rules->num_eat != 0 && philos[i].times_eaten >= rules->num_eat)
 				continue ;
 			pthread_mutex_lock(&rules->dead_mutex);
 			if (current_time - philos[i].last_meal >= rules->time_to_die)
