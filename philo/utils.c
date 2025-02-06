@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:25:28 by reemessam         #+#    #+#             */
-/*   Updated: 2025/02/04 14:32:39 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/02/06 16:53:53 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,6 @@ void	ft_usleep(t_rules *rules, long time_in_ms)
 		{
 			break ;
 		}
-		usleep(100);
+		usleep(10);
 	}
 }

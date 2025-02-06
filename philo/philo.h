@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:25:24 by reemessam         #+#    #+#             */
-/*   Updated: 2025/02/04 14:32:40 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/02/06 16:38:33 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # include <stdio.h>
 # include <stdlib.h>
 // Define any constants or macros here
+
+# define TRUE 1
+# define FALSE 0
 
 // Declare any function prototypes here
 typedef struct s_rules	t_rules;

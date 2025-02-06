@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 11:41:58 by reldahli          #+#    #+#             */
-/*   Updated: 2025/02/04 14:32:46 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/02/06 16:53:11 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	check_death_or_full(t_philo *philo, t_rules *rules)
 			break ;
 		}
 		pthread_mutex_unlock(&rules->arbiter_lock);
-		usleep(100);
+		usleep(1);
 	}
 	return (0);
 }
