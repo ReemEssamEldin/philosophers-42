@@ -29,7 +29,7 @@ int	init_philos(t_rules *rules, t_philo **philos)
 		(*philos)[i].rules = rules;
 		(*philos)[i].done_eating = 0;
 		if (pthread_create(&(*philos)[i].thread, NULL, philo_routine,
-				&(*philos)[i]))
+			&(*philos)[i]))
 			return (FALSE);
 	}
 	return (TRUE);
