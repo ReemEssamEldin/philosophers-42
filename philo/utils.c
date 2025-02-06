@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:25:28 by reemessam         #+#    #+#             */
-/*   Updated: 2025/02/06 18:27:24 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/02/06 18:38:54 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	print_action(t_philo *philo, char *action)
 	pthread_mutex_unlock(&philo->rules->print_mutex);
 }
 
-void	ft_usleep(t_rules *rules, long time_in_ms)
+void	ft_usleep(t_philo *philo, long time_in_ms)
 {
 	long	start;
 	long	elapsed;
@@ -67,7 +67,11 @@ void	ft_usleep(t_rules *rules, long time_in_ms)
 	elapsed = 0;
 	while (1)
 	{
-		if (rules->dead)
+		if (philo->rules->dead)
+		{
+			return ;
+		}
+		if (check_death(philo, philo->rules))
 		{
 			return ;
 		}

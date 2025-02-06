@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:25:08 by reemessam         #+#    #+#             */
-/*   Updated: 2025/02/04 14:32:49 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/02/06 18:37:23 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	main(int argc, char **argv)
 		{
 			break ;
 		}
-		ft_usleep(&rules, 50);
+		usleep(50);
 	}
 	cleanup(&rules, philos);
 	return (0);
