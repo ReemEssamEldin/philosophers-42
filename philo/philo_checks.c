@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 11:41:58 by reldahli          #+#    #+#             */
-/*   Updated: 2025/02/06 18:28:43 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/02/06 18:52:20 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	check_death(t_philo *philo, t_rules *rules)
 {
 	if (rules->dead)
 	{
-		return (1);
+		return (TRUE);
 	}
 	if (philo->last_meal + rules->time_to_die < get_timestamp())
 	{
@@ -24,9 +24,9 @@ int	check_death(t_philo *philo, t_rules *rules)
 		pthread_mutex_lock(&rules->dead_mutex);
 		rules->dead = 1;
 		pthread_mutex_unlock(&rules->dead_mutex);
-		return (1);
+		return (TRUE);
 	}
-	return (0);
+	return (FALSE);
 }
 
 int	check_full(t_philo *philo, t_rules *rules)
@@ -34,17 +34,17 @@ int	check_full(t_philo *philo, t_rules *rules)
 	if (rules->num_eat > 0 && philo->times_eaten >= rules->num_eat)
 	{
 		rules->finished_eating++;
-		return (1);
+		return (TRUE);
 	}
-	return (0);
+	return (FALSE);
 }
 
 int	check_death_or_full(t_philo *philo, t_rules *rules)
 {
-	while (1)
+	while (TRUE)
 	{
 		if (check_death(philo, rules) || check_full(philo, rules))
-			return (1);
+			return (TRUE);
 		pthread_mutex_lock(&rules->arbiter_lock);
 		if (rules->available_slots > 0)
 		{
@@ -55,5 +55,5 @@ int	check_death_or_full(t_philo *philo, t_rules *rules)
 		pthread_mutex_unlock(&rules->arbiter_lock);
 		usleep(1);
 	}
-	return (0);
+	return (FALSE);
 }

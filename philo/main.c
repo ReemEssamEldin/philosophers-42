@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/13 14:25:08 by reemessam         #+#    #+#             */
-/*   Updated: 2025/02/06 18:37:23 by reldahli         ###   ########.fr       */
+/*   Created: 2024/11/13 14:25:08 by reldahli         #+#    #+#             */
+/*   Updated: 2025/02/06 18:48:21 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,13 @@ int	main(int argc, char **argv)
 	t_rules	rules;
 	t_philo	*philos;
 
-	if (init_rules(&rules, argc, argv) || init_philos(&rules, &philos))
-		return (1);
-	while (1)
+	if (!init_rules(&rules, argc, argv))
+		return (EXIT_FAILURE);
+	if (!init_philos(&rules, &philos))
+	{
+		return (EXIT_FAILURE);
+	}
+	while (TRUE)
 	{
 		if (rules.dead == 1)
 		{
@@ -55,5 +59,5 @@ int	main(int argc, char **argv)
 		usleep(50);
 	}
 	cleanup(&rules, philos);
-	return (0);
+	return (EXIT_SUCCESS);
 }

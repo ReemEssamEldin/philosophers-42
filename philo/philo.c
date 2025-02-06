@@ -5,12 +5,34 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/13 14:25:19 by reemessam         #+#    #+#             */
-/*   Updated: 2025/02/06 18:44:05 by reldahli         ###   ########.fr       */
+/*   Created: 2024/11/13 14:25:19 by reldahli         #+#    #+#             */
+/*   Updated: 2025/02/06 18:50:19 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	init_philos(t_rules *rules, t_philo **philos)
+
+{
+	int		i;
+
+	*philos = malloc(sizeof(t_philo) * rules->num_philos);
+	if (!*philos)
+		return (FALSE);
+	i = -1;
+	while (++i < rules->num_philos)
+	{
+		(*philos)[i].id = i;
+		(*philos)[i].times_eaten = 0;
+		(*philos)[i].last_meal = rules->start_time;
+		(*philos)[i].rules = rules;
+		if (pthread_create(&(*philos)[i].thread, NULL, philo_routine,
+			&(*philos)[i]))
+			return (FALSE);
+	}
+	return (TRUE);
+}
 
 void	*philo_routine(void *arg)
 {
@@ -51,7 +73,7 @@ static int	acquire_forks(t_philo *philo, t_rules *rules)
 		if (!pickup_fork(philo, &rules->forks[philo->id]))
 			return (FALSE);
 		if (!pickup_fork(philo, &rules->forks[(philo->id + 1)
-				% rules->num_philos]))
+					% rules->num_philos]))
 		{
 			pthread_mutex_unlock(&rules->forks[philo->id]);
 			return (FALSE);
@@ -60,7 +82,7 @@ static int	acquire_forks(t_philo *philo, t_rules *rules)
 	else
 	{
 		if (!pickup_fork(philo, &rules->forks[(philo->id + 1)
-				% rules->num_philos]))
+					% rules->num_philos]))
 			return (FALSE);
 		if (!pickup_fork(philo, &rules->forks[philo->id]))
 		{
@@ -85,26 +107,4 @@ void	perform_eating(t_philo *philo, t_rules *rules)
 	pthread_mutex_lock(&rules->arbiter_lock);
 	rules->available_slots++;
 	pthread_mutex_unlock(&rules->arbiter_lock);
-}
-
-int	init_philos(t_rules *rules, t_philo **philos)
-
-{
-	int i;
-
-	*philos = malloc(sizeof(t_philo) * rules->num_philos);
-	if (!*philos)
-		return (1);
-	i = -1;
-	while (++i < rules->num_philos)
-	{
-		(*philos)[i].id = i;
-		(*philos)[i].times_eaten = 0;
-		(*philos)[i].last_meal = rules->start_time;
-		(*philos)[i].rules = rules;
-		if (pthread_create(&(*philos)[i].thread, NULL, philo_routine,
-				&(*philos)[i]))
-			return (1);
-	}
-	return (0);
 }

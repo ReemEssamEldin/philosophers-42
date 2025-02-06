@@ -6,22 +6,21 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 09:47:41 by reldahli          #+#    #+#             */
-/*   Updated: 2025/02/06 16:39:08 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/02/06 18:49:43 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	validate_rules(t_rules *rules)
+int	init_rules(t_rules *rules, int argc, char **argv)
 {
-	if (rules->num_philos < 0 || rules->time_to_die < 0
-		|| rules->time_to_eat < 0 || rules->time_to_sleep < 0
-		|| rules->num_eat < 0)
-	{
-		printf("Error: Negative values are not allowed\n");
-		return (1);
-	}
-	return (0);
+	if (!parse_rules(rules, argc, argv))
+		return (FALSE);
+	if (!validate_rules(rules))
+		return (FALSE);
+	if (!init_mutexes(rules))
+		return (FALSE);
+	return (TRUE);
 }
 
 int	parse_rules(t_rules *rules, int argc, char **argv)
@@ -29,7 +28,7 @@ int	parse_rules(t_rules *rules, int argc, char **argv)
 	if (argc != 5 && argc != 6)
 	{
 		printf("Error: Wrong number of arguments\n");
-		return (1);
+		return (FALSE);
 	}
 	rules->num_philos = ft_atoi(argv[1]);
 	rules->time_to_die = ft_atoi(argv[2]);
@@ -39,9 +38,19 @@ int	parse_rules(t_rules *rules, int argc, char **argv)
 		rules->num_eat = ft_atoi(argv[5]);
 	else
 		rules->num_eat = 0;
-	if (validate_rules(rules))
-		return (1);
-	return (0);
+	return (TRUE);
+}
+
+int	validate_rules(t_rules *rules)
+{
+	if (rules->num_philos < 0 || rules->time_to_die < 0
+		|| rules->time_to_eat < 0 || rules->time_to_sleep < 0
+		|| rules->num_eat < 0)
+	{
+		printf("Error: Negative values are not allowed\n");
+		return (FALSE);
+	}
+	return (TRUE);
 }
 
 int	init_mutexes(t_rules *rules)
@@ -54,7 +63,7 @@ int	init_mutexes(t_rules *rules)
 	rules->start_time = get_timestamp();
 	rules->forks = malloc(sizeof(pthread_mutex_t) * rules->num_philos);
 	if (!rules->forks)
-		return (1);
+		return (FALSE);
 	i = 0;
 	while (i < rules->num_philos)
 	{
@@ -64,14 +73,5 @@ int	init_mutexes(t_rules *rules)
 	pthread_mutex_init(&rules->print_mutex, NULL);
 	pthread_mutex_init(&rules->dead_mutex, NULL);
 	pthread_mutex_init(&rules->arbiter_lock, NULL);
-	return (0);
-}
-
-int	init_rules(t_rules *rules, int argc, char **argv)
-{
-	if (parse_rules(rules, argc, argv))
-		return (1);
-	if (init_mutexes(rules))
-		return (1);
-	return (0);
+	return (TRUE);
 }
