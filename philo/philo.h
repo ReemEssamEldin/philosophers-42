@@ -53,12 +53,6 @@ struct					s_philo
 	t_rules				*rules;
 };
 
-typedef struct s_monitor
-{
-	t_rules				*rules;
-	t_philo				*philos;
-}						t_monitor;
-
 // init.c
 int						validate_rules(t_rules *rules);
 int						parse_rules(t_rules *rules, int argc, char **argv);
@@ -86,7 +80,7 @@ void					ft_usleep(t_philo *philo, long time_in_ms);
 
 // monitor.c
 void					*monitor_routine(void *arg);
-int						create_monitor(t_rules *rules, t_philo *philos,
+int						create_monitor(t_philo *philos,
 							pthread_t *monitor_thread);
 
 #endif /* PHILO_H */

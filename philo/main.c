@@ -47,7 +47,7 @@ int	main(int argc, char **argv)
 	{
 		return (EXIT_FAILURE);
 	}
-	if (!create_monitor(&rules, philos, &monitor_thread))
+	if (!create_monitor(philos, &monitor_thread))
 	{
 		cleanup(&rules, philos);
 		return (EXIT_FAILURE);
