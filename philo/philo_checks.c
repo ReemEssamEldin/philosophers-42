@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 11:41:58 by reldahli          #+#    #+#             */
-/*   Updated: 2025/02/06 18:52:20 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/02/06 22:39:02 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,13 @@ int	check_full(t_philo *philo, t_rules *rules)
 {
 	if (rules->num_eat > 0 && philo->times_eaten >= rules->num_eat)
 	{
-		rules->finished_eating++;
+		pthread_mutex_lock(&rules->finished_mutex);
+		if (!philo->done_eating)
+		{
+			rules->finished_eating++;
+			philo->done_eating = 1;
+		}
+		pthread_mutex_unlock(&rules->finished_mutex);
 		return (TRUE);
 	}
 	return (FALSE);

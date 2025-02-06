@@ -41,6 +41,7 @@ struct					s_rules
 	pthread_mutex_t		print_mutex;
 	pthread_mutex_t		dead_mutex;
 	pthread_mutex_t		arbiter_lock;
+	pthread_mutex_t		finished_mutex;
 };
 
 typedef struct s_philo	t_philo;
@@ -51,6 +52,7 @@ struct					s_philo
 	long				last_meal;
 	pthread_t			thread;
 	t_rules				*rules;
+	int					done_eating;
 };
 
 // init.c

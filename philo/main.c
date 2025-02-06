@@ -31,6 +31,7 @@ void	cleanup(t_rules *rules, t_philo *philos)
 	pthread_mutex_destroy(&rules->print_mutex);
 	pthread_mutex_destroy(&rules->dead_mutex);
 	pthread_mutex_destroy(&rules->arbiter_lock);
+	pthread_mutex_destroy(&rules->finished_mutex);
 	free(rules->forks);
 	free(philos);
 }

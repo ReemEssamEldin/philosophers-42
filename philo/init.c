@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 09:47:41 by reldahli          #+#    #+#             */
-/*   Updated: 2025/02/06 18:49:43 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/02/06 22:38:46 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ int	init_mutexes(t_rules *rules)
 	pthread_mutex_init(&rules->print_mutex, NULL);
 	pthread_mutex_init(&rules->dead_mutex, NULL);
 	pthread_mutex_init(&rules->arbiter_lock, NULL);
+	pthread_mutex_init(&rules->finished_mutex, NULL);
 	return (TRUE);
 }

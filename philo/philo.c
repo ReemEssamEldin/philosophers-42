@@ -15,7 +15,7 @@
 int	init_philos(t_rules *rules, t_philo **philos)
 
 {
-	int		i;
+	int i;
 
 	*philos = malloc(sizeof(t_philo) * rules->num_philos);
 	if (!*philos)
@@ -27,8 +27,9 @@ int	init_philos(t_rules *rules, t_philo **philos)
 		(*philos)[i].times_eaten = 0;
 		(*philos)[i].last_meal = rules->start_time;
 		(*philos)[i].rules = rules;
+		(*philos)[i].done_eating = 0;
 		if (pthread_create(&(*philos)[i].thread, NULL, philo_routine,
-			&(*philos)[i]))
+				&(*philos)[i]))
 			return (FALSE);
 	}
 	return (TRUE);
@@ -48,6 +49,8 @@ void	*philo_routine(void *arg)
 		if (check_death_or_full(philo, rules))
 			return (NULL);
 		perform_eating(philo, rules);
+		if (check_full(philo, rules))
+			return (NULL);
 		print_action(philo, "is sleeping");
 		ft_usleep(philo, rules->time_to_sleep);
 		print_action(philo, "is thinking");
@@ -73,7 +76,7 @@ static int	acquire_forks(t_philo *philo, t_rules *rules)
 		if (!pickup_fork(philo, &rules->forks[philo->id]))
 			return (FALSE);
 		if (!pickup_fork(philo, &rules->forks[(philo->id + 1)
-					% rules->num_philos]))
+				% rules->num_philos]))
 		{
 			pthread_mutex_unlock(&rules->forks[philo->id]);
 			return (FALSE);
@@ -82,7 +85,7 @@ static int	acquire_forks(t_philo *philo, t_rules *rules)
 	else
 	{
 		if (!pickup_fork(philo, &rules->forks[(philo->id + 1)
-					% rules->num_philos]))
+				% rules->num_philos]))
 			return (FALSE);
 		if (!pickup_fork(philo, &rules->forks[philo->id]))
 		{
@@ -99,7 +102,9 @@ void	perform_eating(t_philo *philo, t_rules *rules)
 	if (!acquire_forks(philo, rules))
 		return ;
 	philo->times_eaten++;
+	pthread_mutex_lock(&rules->dead_mutex);
 	philo->last_meal = get_timestamp();
+	pthread_mutex_unlock(&rules->dead_mutex);
 	print_action(philo, "is eating");
 	ft_usleep(philo, rules->time_to_eat);
 	pthread_mutex_unlock(&rules->forks[(philo->id + 1) % rules->num_philos]);
